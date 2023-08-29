@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bson.js tester</title>
+</head>
+<body>
+  <h1>BSON</h1>
+  <p>See your console.</p>
+  <script src="bson-browser.js"></script>
+  <script>
+var test = {
+  a:233,
+  嗡嗡嗡:null,
+  c:undefined,
+  d: [233,null,undefined,{
+    e:"not easy to parse"
+  }, "in array"],
+  f: {
+    test: 0,
+    测试: {
+      喜欢中文编程那就来: {
+        g: "ended"
+      },
+      innerArray: []
+    }
+  },
+  h: new Function(),
+  i: ()=> {}
+};
+for(let i=0; i<10000; ++i) test[i] = "233";
+console.time("j")
+for(let i=0;i<100;++i) JSON.stringify(test);
+console.timeEnd("j")
+console.time("b")
+for(let i=0;i<100;++i) BSON.gen(test)
+console.timeEnd("b")
+// console.log(BSON.gen(test));
+// open(URL.createObjectURL(new Blob([BSON.gen(test)],{type:"text/plain;charset=utf8"})));
+  </script>
+</body>
+</html>

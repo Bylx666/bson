@@ -1,0 +1,5 @@
+可加密
+可区分可读模式和传输模式
+只接受对象(可枚举属性),buffer,字符串,数字,真假值,数组,除了多接受buffer以外和json使用几乎没有区别
+undefined symbol bitint function会被跳过
+火狐性能1/10，chrome1/40
