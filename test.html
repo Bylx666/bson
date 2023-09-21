@@ -11,34 +11,44 @@
   <script src="bson-browser.js"></script>
   <script>
 var test = {
-  a:233,
-  嗡嗡嗡:null,
-  c:undefined,
-  d: [233,null,undefined,{
-    e:"not easy to parse"
-  }, "in array"],
-  f: {
-    test: 0,
-    测试: {
-      喜欢中文编程那就来: {
-        g: "ended"
-      },
-      innerArray: []
-    }
-  },
-  h22: new Function(),
-  i44: ()=> {},
-  tab:new Uint8Array(2000)
+  中文属性名:null,
+  "2:3":undefined,
+  复杂嵌套:{
+    number:1024,
+    array: [{},20,"3",true,false,null,undefined],
+    str: "可以正常处理\"符号",
+  }
 };
-console.log(BSON.gen(new Uint8Array(2000)));
-// for(let i=0; i<100; ++i) test[i] = {a:i,b:i*2456};
-// console.time("j")
-// for(let i=0;i<10000;++i) JSON.stringify(test);
-// console.timeEnd("j")
-// console.time("b")
-// for(let i=0;i<10000;++i) BSON.gen(test)
-// console.timeEnd("b")
-// console.log(BSON.gen(test));
+// for(let i=0;i<2000;++i) test[i] = i*2;
+var 
+  bson独有功能= {
+    arwfunc: (n)=> n**2,
+    func: function() {
+      var feat = "不怕换行符，不怕各种转义和编程符号";
+      var test = `比如换行符
+和转义符号\\a\"`
+      return feat + "，" + test
+    },
+    bigint: 1024n,
+    cls: class {
+      constructor(r) {
+        this.r = r;
+      }
+      get s() {return this.r + " from prototype"}
+    },
+    file: new Uint8Array(0xff)
+  }
+j=JSON.stringify(test);
+b=BSON.gen(test)
+console.time("j")
+for(let i=0;i<1000;++i)
+ JSON.parse(j);
+console.timeEnd("j")
+console.log(b);
+console.time("b")
+for(let i=0;i<1000;++i)
+ BSON.parse(b)
+console.timeEnd("b")
 // open(URL.createObjectURL(new Blob([BSON.gen(test)],{type:"text/plain;charset=utf8"})));
   </script>
 </body>

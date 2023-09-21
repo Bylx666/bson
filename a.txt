@@ -1,5 +1,14 @@
 可加密
-可区分可读模式和传输模式
-只接受对象(可枚举属性),buffer,字符串,数字,真假值,数组,除了多接受buffer以外和json使用几乎没有区别
-undefined symbol bitint function会被跳过
-火狐性能1/10，chrome1/40
+更短简洁
+允许函数和类(只允许访问全局作用域)
+允许文件buf和二进制,最高4gb。不建议超过16mb否则会出现明显卡顿。
+
+undefined会被转为null
+bigint会被转为数字
+symbol会被跳过
+
+纯文本可读
+继承json使用习惯
+对象只有可枚举属性会被转换，可用Object.keys测试哪些属性会被转换
+
+速度：对于JSON，chrome和ff速度几乎相同。对于BSON，chrome优化不如火狐，火狐8倍chrome40倍。前后经历4版本，约70倍提升。
